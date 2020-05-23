@@ -17,7 +17,16 @@ class Challenge extends Model
         'name',
         'description',
         'duration',
+        'image_name',
         'start_at',
         'finish_at',
     ];
+
+    /**
+     * The users that belong to the role.
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
 }

@@ -37,11 +37,11 @@ class FriendsController extends Controller
     /**
      * add friend
      */
-    public function sendFriendRequest($potential_friend_user_id)
+    public function sendFriendRequest($new_friend_user_id)
     {
         $userID = auth()->id();
         $user = User::find($userID);
-        $sender = User::find($potential_friend_user_id);
+        $sender = User::find($new_friend_user_id);
         $user->befriend($sender);
         return $this->index();
     }
@@ -49,11 +49,11 @@ class FriendsController extends Controller
     /**
      * accept friends
      */
-    public function acceptFriendRequest($potential_friend_user_id)
+    public function acceptFriendRequest($new_friend_user_id)
     {
         $userID = auth()->id();
         $user = User::find($userID);
-        $recipient = User::find($potential_friend_user_id);
+        $recipient = User::find($new_friend_user_id);
         $user->acceptFriendRequest($recipient);
         return $this->index();
     }

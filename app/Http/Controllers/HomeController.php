@@ -24,15 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $challenges = Challenge::orderBy('start_at', 'desc')
-            ->where('participant_id', '=', auth()->id())
-            ->where('status', '=', 1)
-            ->get();
+        $user = auth()->user();
+        $challenges = $user->challenges;
 
         $challengeRequests = Challenge::orderBy('start_at', 'desc')
-            ->where('participant_id', '=', auth()->id())
-            ->where('status', '=', 0)
             ->get();
 
         return view('home', [

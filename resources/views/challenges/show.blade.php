@@ -8,6 +8,9 @@
                 <div class="card-header">{{ __('Challenge') }}</div>
 
                 <div class="card-body">
+                    @if($challenge->image_name)
+                    <img src="/images/challenges/{{$challenge->image_name}}" alt="Challenge Image">
+                    @endif
                     <h2>{{ $challenge->name }}</h2>
                     <p>Description: {{ $challenge->description }}</p>
                     <p>Duration: {{ $challenge->duration }} min</p>

@@ -49,18 +49,23 @@ class ChallengeController extends Controller
             'name' => 'required',
             'description' => 'required',
             'duration' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        $imageName = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images/challenges'), $imageName);
 
         $user = auth()->user();
 
         $Challenge = new Challenge;
         $Challenge->owner_id = $user->id;
-        $Challenge->participant_id = $user->id;
-        $Challenge->status = 1;
         $Challenge->fill($request->all());
+        $Challenge->image_name = $imageName;
         $Challenge->start_at = Carbon::now();
         $Challenge->finish_at = Carbon::now();
         $Challenge->save();
+
+        $newPivot = $user->challenges()->save($Challenge, ['accepted' => 1, 'completed_at' => 'BEMMMM']);
 
         return redirect()->route('home');
     }
@@ -70,20 +75,19 @@ class ChallengeController extends Controller
      */
     public function sendChallenge($friend_id, $challenge_id)
     {
-        $challenge = Challenge::find($challenge_id);
+        // $challenge = Challenge::find($challenge_id);
 
-        $Challenge = new Challenge;
-        $Challenge->owner_id = $challenge->owner_id;
-        $Challenge->participant_id = $friend_id;
-        $Challenge->status = 0;
-        $Challenge->name = $challenge->name;
-        $Challenge->description = $challenge->description;
-        $Challenge->duration = $challenge->duration;
-        $Challenge->start_at = $challenge->start_at;
-        $Challenge->finish_at = $challenge->finish_at;
-        $Challenge->save();
+        // $Challenge = new Challenge;
+        // $Challenge->owner_id = $challenge->owner_id;
+        // $Challenge->status = 0;
+        // $Challenge->name = $challenge->name;
+        // $Challenge->description = $challenge->description;
+        // $Challenge->duration = $challenge->duration;
+        // $Challenge->start_at = $challenge->start_at;
+        // $Challenge->finish_at = $challenge->finish_at;
+        // $Challenge->save();
 
-        return $this->show($challenge);
+        // return $this->show($challenge);
     }
 
     /**

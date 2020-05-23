@@ -6,3 +6,11 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+.card-body {
+  img {
+    max-width: 100%;
+    max-height: 300px;
+  }
+}

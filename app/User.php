@@ -37,4 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The challenges that belong to the user.
+     */
+    public function challenges()
+    {
+        return $this->belongsToMany('App\Models\Challenge');
+    }
 }
